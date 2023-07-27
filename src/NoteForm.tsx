@@ -1,7 +1,7 @@
 
 import { FormEvent, useRef, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { Form, Row, Col, Stack, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
 import { NoteData, Tag } from './App'
 import { v4 as uuidV4 } from 'uuid'
 import CreatableReactSelect from "react-select/creatable"
@@ -13,6 +13,7 @@ type NoteFormProps = {
 }
 
 export default function NoteForm({ onSubmit, onAddTag, availableTags }: NoteFormProps) {
+  const navigate = useNavigate()
   const titleRef = useRef<HTMLInputElement>(null)
   const markdownRef = useRef<HTMLTextAreaElement>(null)
 
@@ -25,6 +26,8 @@ export default function NoteForm({ onSubmit, onAddTag, availableTags }: NoteForm
       markdown: markdownRef.current!.value,
       tags: selectedTags
     })
+
+    navigate('..')
   }
 
   return (
