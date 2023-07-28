@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Badge, Button, Card, Col, Form, Row, Stack } from 'react-bootstrap'
 import { Note, Tag } from './App'
 import ReactSelect from 'react-select'
-import style from './NoteList.module.css'
+import styles from './NoteList.module.css'
 
 type NoteListProps = {
   availableTags: Tag[]
@@ -76,20 +76,23 @@ export default function NoteList({ availableTags, notes }: NoteListProps ) {
   )
 }
 
-
 function NoteCard({ id, tags, title }: SimplifiedNote) {
+
+
 
   return (
     <>
-      <Card as={Link} to={`/${id}`} className={`h-100 text-reset text-decoration-none ${style.card}`}>
+      <Card as={Link} to={`/${id}`} className={`h-100 text-reset text-decoration-none ${styles.card}`}>
         <Card.Body>
-          {title}
+          <Stack gap={2} className='align-items-center justify-content-center h-100'>
+            <span className='fs-5'>{title}</span>
+            <Stack direction='horizontal' className='my-2'>
+            { tags.length > 0 &&
+              tags.map(tag => <Badge key={tag.id} className='mx-1 text-truncate'>{`${tag.label}`}</Badge>)
+            }
+            </Stack>
+          </Stack>
         </Card.Body>
-        <Card.Footer className='px-4'> Tags:
-          {tags.map(tag => (
-            <Badge className='mx-2'>{`${tag.label}`}</Badge>
-          ))}
-        </Card.Footer>
       </Card>
     </>
   )
