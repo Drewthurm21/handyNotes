@@ -5,6 +5,7 @@ import { Container } from 'react-bootstrap'
 import { v4 as uuidV4 } from 'uuid'
 import useLocalStorage from "./useLocalStorage"
 import NewNote from "./NewNote"
+import NoteList from "./NoteList"
 
 export type Tag = {
   id: string
@@ -57,7 +58,7 @@ function App() {
   return (
     <Container className='my-4'>
       <Routes>
-        <Route path='/' element={<h1>Hello.</h1>} />
+        <Route path='/' element={<NoteList availableTags={tags} notes={notesWithTags} />} />
         <Route path='/new' element={<NewNote onSubmit={onCreateNote} onAddTag={addTag} availableTags={tags} />} />
         <Route path=':id'>
           <Route index element={<h1>Show</h1>} />
