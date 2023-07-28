@@ -31,7 +31,6 @@ export default function NoteList({ availableTags, notes }: NoteListProps ) {
   
   return (
     <>
-    <Button onClick={() => console.log(selectedTags, filteredNotes, notes)}></Button>
       <Row>
         <Col><h1>Notes</h1></Col>
         <Col xs='auto'>
