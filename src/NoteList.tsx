@@ -78,8 +78,6 @@ export default function NoteList({ availableTags, notes }: NoteListProps ) {
 
 function NoteCard({ id, tags, title }: SimplifiedNote) {
 
-
-
   return (
     <>
       <Card as={Link} to={`/${id}`} className={`h-100 text-reset text-decoration-none ${styles.card}`}>
