@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Badge, Button, Card, Col, Form, Row, Stack } from 'react-bootstrap'
+import { Badge, Button, Card, Col, Form, Modal, Row, Stack } from 'react-bootstrap'
 import { Note, Tag } from './App'
 import ReactSelect from 'react-select'
 import styles from './NoteList.module.css'
@@ -8,6 +8,8 @@ import styles from './NoteList.module.css'
 type NoteListProps = {
   availableTags: Tag[]
   notes: Note[]
+  onDeleteTag: (id: string) => void
+  onUpdateTag: (id: string, label: string) => void
 }
 
 type SimplifiedNote = {
@@ -16,9 +18,18 @@ type SimplifiedNote = {
   title: string
 }
 
-export default function NoteList({ availableTags, notes }: NoteListProps ) {
+type TagsModalProps = {
+  availableTags: Tag[]
+  closeModal: () => void
+  onDeleteTag: (id: string) => void
+  onUpdateTag: (id: string, label: string) => void
+  showModal: boolean
+}
+
+export default function NoteList({ availableTags, notes, onDeleteTag, onUpdateTag }: NoteListProps ) {
 
   const [selectedTags, setSelectedTags] = useState<Tag[]>([])
+  const [showModal, setShowModal] = useState<boolean>(false)
   const [title, setTitle] = useState('')
 
 
@@ -38,7 +49,7 @@ export default function NoteList({ availableTags, notes }: NoteListProps ) {
             <Link to='/new'>
               <Button variant='primary'>Create</Button>
             </Link>
-            <Button variant='outline-secondary'>Edit Tags</Button>
+            <Button variant='outline-secondary' onClick={() => setShowModal(true)}>Edit Tags</Button>
           </Stack>
         </Col>
       </Row>
@@ -72,6 +83,13 @@ export default function NoteList({ availableTags, notes }: NoteListProps ) {
           </Col>
         ))}
       </Row>
+      <EditTagsModal 
+        availableTags={availableTags} 
+        closeModal={() => setShowModal(false)} 
+        showModal={showModal}
+        onDeleteTag={onDeleteTag}
+        onUpdateTag={onUpdateTag}
+        />
     </>
   )
 }
@@ -93,5 +111,31 @@ function NoteCard({ id, tags, title }: SimplifiedNote) {
         </Card.Body>
       </Card>
     </>
+  )
+}
+
+function EditTagsModal({availableTags, closeModal, onDeleteTag, onUpdateTag, showModal }: TagsModalProps) {
+  
+
+  return (
+    <Modal show={showModal} onHide={closeModal}>
+      <Modal.Header closeButton>Edit tags</Modal.Header>
+      <Modal.Body>
+        <Form>
+          <Stack gap={2}>
+            {availableTags.map(tag => (
+              <Row key={tag.id}>
+                <Col>
+                  <Form.Control type='text' value={tag.label} onChange={(e) => onUpdateTag(tag.id, e.target.value)}/>
+                </Col>
+                <Col xs='auto'>
+                  <Button variant='outline-danger' onClick={() => onDeleteTag(tag.id)}>&times;</Button>
+                </Col>
+              </Row>
+            ))}
+          </Stack>
+        </Form>
+      </Modal.Body>
+    </Modal>
   )
 }
