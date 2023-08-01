@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Badge, Button, Card, Col, Form, Row, Stack } from 'react-bootstrap'
+import { Badge, Button, Card, Col, Form, Modal, Row, Stack } from 'react-bootstrap'
 import { Note, Tag } from './App'
 import ReactSelect from 'react-select'
 import styles from './NoteList.module.css'
@@ -16,9 +16,16 @@ type SimplifiedNote = {
   title: string
 }
 
+type TagsModalProps = {
+  availableTags: Tag[]
+  closeModal: () => void
+  showModal: boolean
+}
+
 export default function NoteList({ availableTags, notes }: NoteListProps ) {
 
   const [selectedTags, setSelectedTags] = useState<Tag[]>([])
+  const [showModal, setShowModal] = useState<boolean>(false)
   const [title, setTitle] = useState('')
 
 
@@ -38,7 +45,7 @@ export default function NoteList({ availableTags, notes }: NoteListProps ) {
             <Link to='/new'>
               <Button variant='primary'>Create</Button>
             </Link>
-            <Button variant='outline-secondary'>Edit Tags</Button>
+            <Button variant='outline-secondary' onClick={() => setShowModal(true)}>Edit Tags</Button>
           </Stack>
         </Col>
       </Row>
@@ -72,6 +79,7 @@ export default function NoteList({ availableTags, notes }: NoteListProps ) {
           </Col>
         ))}
       </Row>
+      <EditTagsModal availableTags={availableTags} closeModal={() => setShowModal(false)} showModal={showModal}/>
     </>
   )
 }
@@ -93,5 +101,31 @@ function NoteCard({ id, tags, title }: SimplifiedNote) {
         </Card.Body>
       </Card>
     </>
+  )
+}
+
+function EditTagsModal({availableTags, closeModal, showModal }: TagsModalProps) {
+  
+
+  return (
+    <Modal show={showModal} onHide={closeModal}>
+      <Modal.Header closeButton>Edit tags</Modal.Header>
+      <Modal.Body>
+        <Form>
+          <Stack gap={2}>
+            {availableTags.map(tag => (
+              <Row key={tag.id}>
+                <Col>
+                  <Form.Control type='text' value={tag.label} />
+                </Col>
+                <Col xs='auto'>
+                  <Button variant='outline-danger' >&times;</Button>
+                </Col>
+              </Row>
+            ))}
+          </Stack>
+        </Form>
+      </Modal.Body>
+    </Modal>
   )
 }
