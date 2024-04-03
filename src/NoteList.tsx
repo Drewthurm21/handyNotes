@@ -116,7 +116,7 @@ export default function NoteList({
           </Col>
         </Row>
       </Form>
-      <Row xs={1} sm={2} lg={3} xl={4} className="g-3">
+      <Row id="notes-list" xs={1} sm={2} lg={3} xl={4} className="g-3">
         {filteredNotes.map((note) => (
           <Col key={note.id}>
             <NoteCard id={note.id} title={note.title} tags={note.tags} />
@@ -181,6 +181,7 @@ function EditTagsModal({
               <Row key={tag.id}>
                 <Col>
                   <Form.Control
+                    id="tag-item"
                     type="text"
                     value={tag.label}
                     onChange={(e) => onUpdateTag(tag.id, e.target.value)}
@@ -188,6 +189,7 @@ function EditTagsModal({
                 </Col>
                 <Col xs="auto">
                   <Button
+                    id="delete-tag-btn"
                     variant="outline-danger"
                     onClick={() => onDeleteTag(tag.id)}
                   >

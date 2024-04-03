@@ -6,7 +6,7 @@ import { v4 as uuidV4 } from "uuid";
 import useLocalStorage from "./useLocalStorage";
 import Note from "./Note.tsx";
 import NewNote from "./NewNote";
-import NoteList from "./NoteList";
+import NoteList from "./NoteList.tsx";
 import NoteLayout from "./NoteLayout";
 import EditNote from "./EditNote.tsx";
 
