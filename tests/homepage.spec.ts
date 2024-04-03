@@ -1,13 +1,12 @@
-import { test, expect, type Page } from '@playwright/test';
-
-const baseURL = 'http://localhost:5173/'
-
-test.beforeEach(async ({ page }) => {
-  await page.goto(baseURL);
-});
+import { test, expect } from '@playwright/test';
+import { localHost } from './utils';
 
 test.describe('Site loads base elements properly.' , () => {
   
+  test.beforeEach(async ({ page }) => {
+    await page.goto(localHost);
+  });
+
   test('Page title is correct', async ({ page }) => {
     expect(await page.title()).toBe('Handy Notes!');
   });
@@ -41,6 +40,11 @@ test.describe('Site loads base elements properly.' , () => {
   test('Page has a tag filter dropdown', async ({ page }) => {
     const tagFilterDropdown = page.locator('#tag-filter-dropdown');
     expect(tagFilterDropdown).not.toBe(null);
+  });
+
+  test('Page has a notes list', async ({ page }) => {
+    const notesList = page.locator('#notes-list');
+    expect(notesList).not.toBe(null);
   });
   
 });
