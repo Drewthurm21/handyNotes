@@ -30,7 +30,7 @@ export default defineConfig({
     headless: false,
     launchOptions: {
       /* Slow down Playwright operations by the given amount of milliseconds. */
-      slowMo: 1000,
+      slowMo: 2000,
     },
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */

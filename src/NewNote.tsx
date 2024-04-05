@@ -14,7 +14,7 @@ export default function NewNote({
 }: NewNoteProps) {
   return (
     <>
-      <h1 id="new-note-button" className="mb-4">
+      <h1 id="new-note-header" className="mb-4">
         New Note
       </h1>
       <NoteForm

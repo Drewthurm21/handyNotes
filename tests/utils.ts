@@ -19,6 +19,20 @@ export const consumeLocalStorage = async (page: Page, key: string) => {
   }, key);
 }
 
+export const createNewNote = async (page: Page, title: string, markdown: string, tags: string[]) => {
+  await page.getByRole('button', { name: 'Create' }).click();
+  await page.getByLabel('Title').click();
+  await page.getByLabel('Title').fill('New Note');
+  await page.locator('.css-w9q2zk-Input2').click();
+  await page.locator('#react-select-5-input').fill('new tag');
+  await page.locator('#react-select-5-input').press('Enter');
+  await page.locator('#react-select-5-input').fill('new tag two');
+  await page.locator('#react-select-5-input').press('Enter');
+  await page.locator('textarea').click();
+  await page.locator('textarea').fill('New note text here...');
+  await page.getByRole('button', { name: 'Save' }).click();
+}
+
 
 //Data used for testing
 export const notesData = [
